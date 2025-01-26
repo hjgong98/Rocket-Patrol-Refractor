@@ -19,11 +19,17 @@ class Play extends Phaser.Scene {
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0)
 
+        // flag to track if rocket hit spaceship
+        this.rocketHit = false;
+
         // add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize * 6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0)
         this.ship02 = new Spaceship(this, game.config.width + borderUISize * 3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20).setOrigin(0, 0)
         this.ship03 = new Spaceship(this, game.config.width, borderUISize * 6 + borderPadding * 4, 'spaceship', 0, 10).setOrigin(0, 0)
         
+        // add fancy spaceship
+        this.fancySpaceship = new FancySpaceship(this, game.config.width, borderUISize * 7 + borderPadding * 6, 'fancyspaceship', 0, 50).setOrigin(0, 0)
+
         // define keys
         keyFIRE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F)
         keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
@@ -56,6 +62,20 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width / 2, game.config.height / 2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5)
             this.gameOver = true
         }, null, this)
+
+        // Add timer text
+        this.timerText = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding, 'Time: 60', {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5
+            },
+            fixedWidth: 150
+        }).setOrigin(1, 0); // Align to the right
     }
 
     update() {
@@ -66,6 +86,12 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene")
         }
 
+        // update timer
+        if (!this.gameOver) {
+            const remainingTime = this.clock.getRemainingSeconds(); // Get remaining time in seconds
+            this.timerText.setText(`Time: ${Math.ceil(remainingTime)}`); // Update the timer text
+        }
+
         this.starfield.tilePositionX -= 4
 
         // check if game over
@@ -74,6 +100,7 @@ class Play extends Phaser.Scene {
             this.ship01.update()
             this.ship02.update()
             this.ship03.update()
+            this.fancySpaceship.update()
         }
         
         // check collisions
@@ -88,6 +115,10 @@ class Play extends Phaser.Scene {
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset()
             this.shipExplode(this.ship01)
+        }
+        if (this.checkCollision(this.p1Rocket, this.fancySpaceship)) {
+            this.p1Rocket.reset()
+            this.shipExplode(this.fancySpaceship)
         }
     }
 
@@ -118,6 +149,28 @@ class Play extends Phaser.Scene {
 
         this.p1Score += ship.points
         this.scoreLeft.text = this.p1Score
-        this.sound.play('explosion')
+
+        // add 5 seconds to timer
+    //    this.clock.reset({
+      //      delay: this.clock.getRemainingSeconds() * 1000 + 5000, // Add 5000 milliseconds (5 seconds)
+        //    callback: () => {
+          //      this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            //    this.add.text(game.config.width / 2, game.config.height / 2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+              //  this.gameOver = true;
+    //        },
+      //      callbackScope: this
+        //});
+        
+        // play a random explosion sound
+        const randomNumber = Math.floor(Math.random() * 4) + 1;
+        if (randomNumber === 1) {
+            this.sound.play('explosion');
+        } else if (randomNumber === 2) {
+            this.sound.play('explosion2');
+        } else if (randomNumber === 3) {
+            this.sound.play('explosion3');
+        } else {
+            this.sound.play('explosion4');
+        }
     }
 }
