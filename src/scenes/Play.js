@@ -28,10 +28,10 @@ class Play extends Phaser.Scene {
         this.fancySpaceship = new FancySpaceship(this, game.config.width, borderUISize * 7 + borderPadding * 6, 'fancyspaceship', 0, 50).setOrigin(0, 0)
 
         // define keys
-        keyFIRE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F)
-        keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        //keyFIRE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F)
+        //keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+        //keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
+        //keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
 
         // mouse input
         this.input.on('pointerdown', (pointer) => {
@@ -39,8 +39,7 @@ class Play extends Phaser.Scene {
                 this.p1Rocket.isFiring = true;
                 this.p1Rocket.sfxShot.play();
             }
-        });
-
+        })
 
         //initialize score
         this.p1Score = 0
