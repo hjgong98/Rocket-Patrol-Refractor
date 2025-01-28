@@ -29,8 +29,8 @@ class Play extends Phaser.Scene {
 
         // define keys
         //keyFIRE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F)
-        //keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
-        //keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
+        keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         //keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
 
         // mouse input
