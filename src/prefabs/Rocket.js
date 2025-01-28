@@ -11,6 +11,8 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.rocketMiss = false
     }
 
+    // mouse input (?)
+
     update() {
         // left/right movement
         if(!this.isFiring) {
