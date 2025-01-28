@@ -7,7 +7,6 @@
 // Mod 2: create 4 explosion sounds and randomize which one plays on impact (3)
 //        added 4 explosion sounds, upon impact, generate a random number between 1 and 4 and play the corresponding sound
 // Mod 3: adds time for successful hits and subtracts time for misses (5)
-//        added a timer that adds 5 seconds for successful hits
 // Mod 4: display time remaining on screen (3)
 //        time remaining is in top right corner
 

@@ -19,9 +19,6 @@ class Play extends Phaser.Scene {
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0)
 
-        // flag to track if rocket hit spaceship
-        this.rocketHit = false;
-
         // add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize * 6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0)
         this.ship02 = new Spaceship(this, game.config.width + borderUISize * 3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20).setOrigin(0, 0)
@@ -120,6 +117,11 @@ class Play extends Phaser.Scene {
             this.p1Rocket.reset()
             this.shipExplode(this.fancySpaceship)
         }
+
+        if (this.p1Rocket.rocketMiss) {
+            this.p1Rocket.rocketMiss = false
+            this.clock.elapsed += 5000;
+        }
     }
 
     checkCollision(rocket, ship) {
@@ -151,15 +153,7 @@ class Play extends Phaser.Scene {
         this.scoreLeft.text = this.p1Score
 
         // add 5 seconds to timer
-    //    this.clock.reset({
-      //      delay: this.clock.getRemainingSeconds() * 1000 + 5000, // Add 5000 milliseconds (5 seconds)
-        //    callback: () => {
-          //      this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            //    this.add.text(game.config.width / 2, game.config.height / 2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
-              //  this.gameOver = true;
-    //        },
-      //      callbackScope: this
-        //});
+        this.clock.elapsed -= 5000;
         
         // play a random explosion sound
         const randomNumber = Math.floor(Math.random() * 4) + 1;
