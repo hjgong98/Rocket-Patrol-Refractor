@@ -34,6 +34,13 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
 
         // mouse input
+        this.input.on('pointerdown', (pointer) => {
+            if (!this.p1Rocket.isFiring) {
+                this.p1Rocket.isFiring = true;
+                this.p1Rocket.sfxShot.play();
+            }
+        });
+
 
         //initialize score
         this.p1Score = 0

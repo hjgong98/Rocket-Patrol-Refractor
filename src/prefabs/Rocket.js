@@ -11,11 +11,19 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.rocketMiss = false
     }
 
-    // mouse input (?)
-
     update() {
         // left/right movement
         if(!this.isFiring) {
+            // Move the rocket to the mouse's X position
+            this.x = this.scene.input.activePointer.x;
+
+            // Constrain the rocket within the game boundaries
+            this.x = Phaser.Math.Clamp(
+                this.x,
+                borderUISize + this.width / 2,
+                game.config.width - borderUISize - this.width / 2
+            )
+
             if(keyLEFT.isDown && this.x >= borderUISize + this.width) {
                 this.x -= this.moveSpeed
             } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
